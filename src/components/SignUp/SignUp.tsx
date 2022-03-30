@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Button, Input } from 'antd'
-
 import {
   UserOutlined,
   EyeInvisibleOutlined,
@@ -8,6 +7,8 @@ import {
 } from '@ant-design/icons'
 
 import signAPI from '../../api/signUp'
+import { Link } from 'react-router-dom'
+//import './SignUp.scss'
 
 const signObj = {
   account: '',
@@ -29,16 +30,16 @@ const SignUp: React.FC = () => {
     setSign({ ...sign, password_confirmation: e.target.value })
   }
 
+  // 注册
   const submit = () => {
     signAPI
       .signUp(sign)
-      .then((res: any) => console.log(res))
-      .catch((err: any) => console.log(err))
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   }
 
   return (
-    <div>
-      注册页面
+    <div className="signUp">
       <Input
         placeholder="请输入用户名"
         prefix={<UserOutlined />}
@@ -64,6 +65,10 @@ const SignUp: React.FC = () => {
       <Button type="primary" onClick={submit}>
         注册
       </Button>
+      <p>
+        如果你有账号，请立即
+        <Link to="/login">登录</Link>
+      </p>
     </div>
   )
 }
