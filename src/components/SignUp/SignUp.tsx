@@ -8,7 +8,7 @@ import {
 
 import signAPI from '../../api/signUp'
 import { Link } from 'react-router-dom'
-//import './SignUp.scss'
+import './SignUp.scss'
 
 const signObj = {
   account: '',
@@ -40,6 +40,7 @@ const SignUp: React.FC = () => {
 
   return (
     <div className="signUp">
+      <h1>全军出击</h1>
       <Input
         placeholder="请输入用户名"
         prefix={<UserOutlined />}
@@ -62,7 +63,7 @@ const SignUp: React.FC = () => {
         value={sign.password_confirmation}
         onChange={onPasswordConfirmChange}
       />
-      <Button type="primary" onClick={submit}>
+      <Button type="primary" onClick={submit} className="loginButton">
         注册
       </Button>
       <p>
