@@ -6,7 +6,7 @@ import {
   EyeTwoTone,
 } from '@ant-design/icons'
 
-import signAPI from '../../api/signUp'
+import signAPI from '../../api/login/login'
 import { Link, useNavigate } from 'react-router-dom'
 import './Login.scss'
 

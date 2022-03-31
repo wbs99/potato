@@ -6,7 +6,7 @@ import {
   EyeTwoTone,
 } from '@ant-design/icons'
 
-import signAPI from '../../api/signUp'
+import signAPI from '../../api/signUp/signUp'
 import { Link, useNavigate } from 'react-router-dom'
 import './SignUp.scss'
 
@@ -72,7 +72,7 @@ const SignUp: React.FC = () => {
       </Button>
       <p>
         如果你有账号，请立即
-        <Link to="/login">登录</Link>
+        <Link to="/login">退出</Link>
       </p>
     </div>
   )
