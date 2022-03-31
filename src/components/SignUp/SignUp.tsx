@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons'
 
 import signAPI from '../../api/signUp'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './SignUp.scss'
 
 const signObj = {
@@ -15,26 +15,24 @@ const signObj = {
   password: '',
   password_confirmation: '',
 }
+
 const SignUp: React.FC = () => {
+  const navigate = useNavigate()
+
   const [sign, setSign] = useState(signObj)
 
-  const onAccountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSign({ ...sign, account: e.target.value })
-  }
-
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSign({ ...sign, password: e.target.value })
-  }
-
-  const onPasswordConfirmChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSign({ ...sign, password_confirmation: e.target.value })
+  const onChange = (key: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    setSign({
+      ...sign,
+      [key]: e.target.value.trim(),
+    })
   }
 
   // 注册
   const submit = () => {
     signAPI
       .signUp(sign)
-      .then(res => console.log(res))
+      .then(() => navigate('/login'))
       .catch(err => console.log(err))
   }
 
@@ -45,7 +43,9 @@ const SignUp: React.FC = () => {
         placeholder="请输入用户名"
         prefix={<UserOutlined />}
         value={sign.account}
-        onChange={onAccountChange}
+        onChange={e => {
+          onChange('account', e)
+        }}
       />
       <Input.Password
         placeholder="请输入密码"
@@ -53,7 +53,9 @@ const SignUp: React.FC = () => {
           visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
         }
         value={sign.password}
-        onChange={onPasswordChange}
+        onChange={e => {
+          onChange('password', e)
+        }}
       />
       <Input.Password
         placeholder="请输入密码"
@@ -61,9 +63,11 @@ const SignUp: React.FC = () => {
           visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
         }
         value={sign.password_confirmation}
-        onChange={onPasswordConfirmChange}
+        onChange={e => {
+          onChange('password_confirmation', e)
+        }}
       />
-      <Button type="primary" onClick={submit} className="loginButton">
+      <Button type="primary" onClick={submit} className="signButton">
         注册
       </Button>
       <p>
