@@ -1,0 +1,12 @@
+.index{
+  //max-width: 1000px;
+  padding: 16px;
+  >header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span{
+      padding-left: 8px;
+    }
+  }
+}
