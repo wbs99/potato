@@ -7,14 +7,10 @@ import { DownOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import './index.scss'
 import ToDos from '../Todos/Todos'
 
-const userObj = {
-  account: '',
-}
-
 const Index = () => {
   const navigate = useNavigate()
 
-  const [user, setUser] = useState(userObj)
+  const [user, setUser] = useState({ account: '' })
 
   useEffect(() => {
     getMe()
@@ -23,7 +19,7 @@ const Index = () => {
   const getMe = () => {
     IndexApi.getMe()
       .then(res => {
-        setUser({ ...user, account: res.data.account })
+        setUser({ account: res.data.account })
       })
       .catch(err => {
         console.log(err)

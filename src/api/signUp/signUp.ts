@@ -1,12 +1,12 @@
 import request from '../../config/axios'
 
-type SignObj = {
+type SignObjType = {
   account: string
   password: string
   password_confirmation: string
 }
 
-const signUp = (data: SignObj) => {
+const signUp = (data: SignObjType) => {
   return request({ url: 'sign_up/user', method: 'post', data })
 }
 

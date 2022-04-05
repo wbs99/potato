@@ -3,6 +3,7 @@ import TodoInput from './TodoInput'
 import todoApi from '../../api/Todos/Todos'
 import { message } from 'antd'
 import './Todos.scss'
+import TodoItem from './TodoItem'
 
 type todoListType = {
   completed: boolean
@@ -14,6 +15,7 @@ type todoListType = {
   id: number
   updated_at: string
   user_id: number
+  editing: boolean
 }
 
 const ToDos: React.FC = () => {
@@ -25,11 +27,19 @@ const ToDos: React.FC = () => {
   }, [])
 
   const getTodoList = () => {
-    const getTodoList = async () => {
-      const res = await todoApi.getTodoList()
-      setTodoList(res.data.resources)
-    }
-    getTodoList()
+    todoApi
+      .getTodoList()
+      .then(res => {
+        const todos = res.data.resources.map((item: any) => {
+          JSON.parse(JSON.stringify(item))
+          item.editing = false
+          return item
+        })
+        setTodoList(todos)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   const addTodo = (value: string) => {
@@ -40,6 +50,25 @@ const ToDos: React.FC = () => {
           message.success('成功添加新任务')
           getTodoList()
         })
+  }
+
+  const updateTodo = (id: number, params: updateTodoParams) => {
+    todoApi.updateTodo(id, params).then(() => {
+      message.success('成功更新 Todo')
+      getTodoList()
+    })
+  }
+
+  const updateEditing = (id: number) => {
+    todoList.map(item => {
+      if (item.id === id) {
+        item.editing = true
+      } else {
+        item.editing = false
+      }
+      return item
+    })
+    setTodoList([...todoList])
   }
 
   return (
@@ -54,9 +83,12 @@ const ToDos: React.FC = () => {
       <main>
         {todoList.map(item => {
           return (
-            <div key={item.id}>
-              <p>{item.description}</p>
-            </div>
+            <TodoItem
+              updateEditing={updateEditing}
+              updateTodo={updateTodo}
+              key={item.id}
+              {...item}
+            />
           )
         })}
       </main>
